@@ -18,11 +18,11 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Set up Gradle 8.10
+      - name: Set up Gradle 8.11
         run: |
-          curl -L -o gradle.zip https://services.gradle.org/distributions/gradle-8.10-bin.zip
+          curl -L -o gradle.zip https://services.gradle.org/distributions/gradle-8.11-bin.zip
           unzip -q gradle.zip
-          echo "$PWD/gradle-8.10/bin" >> "$GITHUB_PATH"
+          echo "$PWD/gradle-8.11/bin" >> "$GITHUB_PATH"
 
       - name: Build with Gradle
         run: gradle build --stacktrace
