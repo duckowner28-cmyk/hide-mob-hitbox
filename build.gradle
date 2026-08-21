@@ -1,5 +1,5 @@
 plugins {
-		id 'fabric-loom' version '1.14.10'
+	id 'fabric-loom' version '1.14.10'
 	id 'maven-publish'
 }
 
@@ -8,6 +8,12 @@ group = project.maven_group
 
 base {
 	archivesName = project.archives_base_name
+}
+
+loom {
+	mixin {
+		defaultRefmapName = "hide-mob-hitboxes-refmap.json"
+	}
 }
 
 repositories {
@@ -26,20 +32,4 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
 
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
-}
-
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
-}
-
-java {
-	withSourcesJar()
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
-}
+processResourc
