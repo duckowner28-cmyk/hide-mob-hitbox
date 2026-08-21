@@ -1,8 +1,6 @@
 package com.example.hidemobhitboxes.mixin;
 
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderManager;
-import net.minecraft.client.render.entity.state.EntityHitboxAndView;
 import net.minecraft.client.render.entity.state.EntityRenderState;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,8 +16,6 @@ public abstract class EntityRenderDispatcherMixin {
 	private static void hideMobHitboxes(
 			MatrixStack matrices,
 			EntityRenderState state,
-			EntityHitboxAndView hitbox,
-			VertexConsumerProvider vertexConsumers,
 			CallbackInfo ci
 	) {
 		if (!(state instanceof PlayerEntityRenderState)) {
