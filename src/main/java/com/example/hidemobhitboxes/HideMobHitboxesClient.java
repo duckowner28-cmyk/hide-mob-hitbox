@@ -1,17 +1,29 @@
-package com.example.hidemobhitboxes;
+package com.example.hidemobhitboxes.mixin;
 
-import net.fabricmc.api.ClientModInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRenderManager;
+import net.minecraft.client.render.entity.state.EntityHitboxAndView;
+import net.minecraft.client.render.entity.state.EntityRenderState;
+import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
+import net.minecraft.client.util.math.MatrixStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-public class HideMobHitboxesClient implements ClientModInitializer {
-	public static final String MOD_ID = "hide-mob-hitboxes";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+@Mixin(value = EntityRenderManager.class, priority = 100)
+public abstract class EntityRenderDispatcherMixin {
 
-	@Override
-	public void onInitializeClient() {
-		// All the real work happens in EntityRenderDispatcherMixin, which is
-		// applied automatically by the mixin system. Nothing to wire up here.
-		LOGGER.info("[HideMobHitboxes] loaded - non-player hitboxes will be hidden.");
+	@Inject(method = "renderHitboxes", at = @At("HEAD"), cancellable = true)
+	private static void hideMobHitboxes(
+			MatrixStack matrices,
+			EntityRenderState state,
+			EntityHitboxAndView hitbox,
+			VertexConsumerProvider vertexConsumers,
+			CallbackInfo ci
+	) {
+		if (!(state instanceof PlayerEntityRenderState)) {
+			ci.cancel();
+		}
 	}
 }
