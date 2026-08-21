@@ -12,6 +12,7 @@ base {
 
 loom {
 	mixin {
+		useLegacyMixinAp = true
 		defaultRefmapName = "hide-mob-hitboxes-refmap.json"
 	}
 }
@@ -32,4 +33,20 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
 
-processResourc
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+}
+
+java {
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
